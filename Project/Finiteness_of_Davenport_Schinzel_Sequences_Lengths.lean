@@ -101,8 +101,7 @@ lemma count_adjacent_pair_eq_count_adjacent_pair_b {α : Type} [DecidableEq α] 
             apply congr_arg
             apply List.filter_congr
             intro i _
-            simp only [Function.comp_apply, Nat.succ_eq_add_one,
-            List.getElem?_cons_succ, Bool.decide_and]
+            rfl
           · simpa only [List.length_cons, lt_add_iff_pos_left, add_pos_iff,
             Nat.ofNat_pos, or_true, getElem?_pos, List.getElem_cons_zero,
             Option.some.injEq, zero_add, zero_lt_one, List.getElem_cons_succ,
@@ -114,8 +113,7 @@ lemma count_adjacent_pair_eq_count_adjacent_pair_b {α : Type} [DecidableEq α] 
             apply congr_arg
             apply List.filter_congr
             intro i _
-            simp only [Function.comp_apply,
-            Nat.succ_eq_add_one, List.getElem?_cons_succ, Bool.decide_and]
+            rfl
           · simpa only [not_and, List.length_cons, lt_add_iff_pos_left,
             add_pos_iff, Nat.ofNat_pos, or_true, getElem?_pos,
             List.getElem_cons_zero, Option.some.injEq, zero_add, zero_lt_one,
@@ -160,7 +158,7 @@ lemma sum_counts_adjacent_pairs_eq_length_sub_one_of_subset {α : Type} [Decidab
         apply Nat.lt_of_le_of_lt (Nat.succ_le_of_lt hi)
         apply Nat.sub_one_lt
         intro h
-        simp only [h, zero_tsub, not_lt_zero'] at hi
+        simp only [h, zero_tsub, not_lt_zero] at hi
     -- Let's extract values
     rw [List.getElem?_eq_getElem hi_lt, List.getElem?_eq_getElem hi_succ_lt]
     simp only [Option.some.injEq]
@@ -318,7 +316,7 @@ lemma distinct_adjacent_pairs_eq_distinct_adjacent_pairs_b {α : Type} [Decidabl
   unfold distinct_adjacent_pairs distinct_adjacent_pairs_b
   congr 1
   by_cases h_u : u = []
-  · simp only [h_u, List.length_nil, not_lt_zero', not_false_eq_true, getElem?_neg, zero_tsub,
+  · simp only [h_u, List.length_nil, not_lt_zero, not_false_eq_true, getElem?_neg, zero_tsub,
     List.range_zero, List.filterMap_nil, List.tail_nil, List.zip_nil_right]
   · rw [List.zip_eq_zipWith]
     let default_val : α := u.head h_u
@@ -364,10 +362,10 @@ lemma List.mem_zip_iff_getElem {α β : Type} {l₁ : List α} {l₂ : List β} 
     x ∈ l₁.zip l₂ ↔ ∃ i : ℕ, ∃ h₁ : i < l₁.length, ∃ h₂ : i < l₂.length,
       l₁[i] = x.1 ∧ l₂[i] = x.2 := by
   induction l₁ generalizing l₂
-  · simp_all only [zip_nil_left, not_mem_nil, exists_and_left, length_nil, not_lt_zero', IsEmpty.exists_iff,
+  · simp_all only [zip_nil_left, not_mem_nil, exists_and_left, length_nil, not_lt_zero, IsEmpty.exists_iff,
     exists_const]
   · cases l₂
-    · simp_all only [exists_and_left, exists_and_right, zip_nil_right, not_mem_nil, length_nil, not_lt_zero',
+    · simp_all only [exists_and_left, exists_and_right, zip_nil_right, not_mem_nil, length_nil, not_lt_zero,
       IsEmpty.exists_iff, length_cons, exists_false]
     · simp_all only [zip_cons_cons, mem_cons, length_cons, exists_and_left, exists_and_right]
       obtain ⟨fst, snd⟩ := x

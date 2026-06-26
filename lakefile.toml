@@ -9,6 +9,8 @@ defaultTargets = ["Project"]
 [[require]]
 name = "mathlib"
 scope = "leanprover-community"
+version = "git#v4.31.0"
 
 [[lean_lib]]
 name = "Project"
+globs = ["Project.+"]

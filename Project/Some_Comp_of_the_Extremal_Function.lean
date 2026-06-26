@@ -135,7 +135,7 @@ theorem Comp3 (n : ℕ) :
         | [], h => by contradiction | y::ys, _ => ⟨y, ys, rfl⟩
       simp only [ne_eq, List.isChain_cons_cons] at hs
       have h_abc : List.Sublist [x, y, x] (x :: y :: ys) :=
-        List.Sublist.cons₂ _ (List.Sublist.cons₂ _
+        List.Sublist.cons_cons _ (List.Sublist.cons_cons _
         (List.singleton_sublist.2 (List.mem_of_ne_of_mem hs.1 hx)))
       have h_alt : is_alternating [x, y, x] := by
         simp only [is_alternating, is_sparse, ne_eq, List.isChain_cons_cons, hs.1, not_false_eq_true,
@@ -152,8 +152,7 @@ theorem Comp3 (n : ℕ) :
   · refine Finset.le_max' _ n ?_
     rw [Set.Finite.mem_toFinset]
     use List.range n; constructor
-    · dsimp only
-      refine ⟨?_, List.nodup_range.isChain, ?_⟩
+    · refine ⟨?_, List.nodup_range.isChain, ?_⟩
       · simp only [distinct_count_by_dedup, List.dedup_eq_self.2 List.nodup_range,
         List.length_range, le_refl]
       · have h_non := (alternating_subsequences_lengths_finite (List.range n)).toFinset_nonempty.mpr
@@ -344,7 +343,7 @@ lemma no_abab_in_increasing_append_decreasing {n : ℕ} (u : List ℕ)
 lemma lower_bound_no_abab (n : ℕ) :
     max_alternating_length (lower_bound_seq n) < 4 := by
   by_contra h_ge
-  push_neg at h_ge
+  push Not at h_ge
   obtain ⟨u, h_u, h_len⟩ := exists_max_alternating_length (lower_bound_seq n)
   let v := u.take 4
   unfold alternating_subsequences at h_u
@@ -431,7 +430,7 @@ lemma exists_unique_element_of_DS4 {n : ℕ} {u : List ℕ}
     (h_ne : u ≠ []) :
     ∃ x ∈ u, u.count x = 1 := by
   by_contra h_neg
-  push_neg at h_neg
+  push Not at h_neg
   -- Proof by contradiction: Assume that every element appearing in the sequence appears at least twice.
   -- Meaning, there are no unique elements in the sequence.
   have h_count_ge_2 : ∀ x ∈ u, 2 ≤ u.count x := fun x hx =>
@@ -523,7 +522,7 @@ lemma exists_unique_element_of_DS4 {n : ℕ} {u : List ℕ}
     rw [hR_eq]
     have : headR = b := by simp [b, hR_eq]
     rw [this]
-    apply List.Sublist.cons₂
+    apply List.Sublist.cons_cons
     exact List.singleton_sublist.mpr ha_in_tail
   -- The existence of the alternating subsequence [b, a, b, a] implies that the maximum alternating length of the sequence is at least 4.
   have h_len_bad : max_alternating_length u ≥ 4 := by

@@ -85,7 +85,9 @@ lemma F_monotonic_n (k n : ℕ) : F k n ≤ F k (n + 1) := by
   | zero => simp only [F, le_refl]
   | succ k' =>
     cases k' with
-    | zero => simp only [F, Nat.ofNat_pos, mul_le_mul_iff_right₀, le_add_iff_nonneg_right, zero_le]
+    | zero =>
+      show 2 * n ≤ 2 * (n + 1)
+      omega
     | succ k'' =>
       simp [F, Function.iterate_succ_apply']
       apply le_of_lt

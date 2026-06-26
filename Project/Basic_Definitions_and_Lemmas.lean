@@ -398,10 +398,10 @@ lemma exists_sublist_split_of_sublist_append {α} {l l1 l2 : List α} (h : l.Sub
     | cons _ h_sub => -- l <+ xs ++ l2 (skip x)
       obtain ⟨s1, s2, hs1, hs2, heq⟩ := ih h_sub
       exact ⟨s1, s2, List.Sublist.cons x hs1, hs2, heq⟩
-    | cons₂ _ h_sub => -- l = x::l', l' <+ xs ++ l2 (keep x)
+    | cons_cons _ h_sub => -- l = x::l', l' <+ xs ++ l2 (keep x)
       rename_i l'
       obtain ⟨s1, s2, hs1, hs2, heq⟩ := ih h_sub
-      exact ⟨x :: s1, s2, List.Sublist.cons₂ x hs1, hs2, by rw [heq, List.cons_append]⟩
+      exact ⟨x :: s1, s2, List.Sublist.cons_cons x hs1, hs2, by rw [heq, List.cons_append]⟩
 
 end Properties_of_Subsequences
 
