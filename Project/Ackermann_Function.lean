@@ -55,7 +55,7 @@ lemma F_iterate_ge_one {k n : ℕ} (hk : k ≥ 1) (hn : n ≥ 1) :
 lemma F_inflationary {k n : ℕ} (hk : k ≥ 1) (hn : n ≥ 1) :
     n < F k n := by
   induction k generalizing n
-  · simp_all only [ge_iff_le, nonpos_iff_eq_zero, one_ne_zero]
+  · contradiction
   · rename_i k ih
     by_cases hk : k = 0
     · simp_all only [ge_iff_le, nonpos_iff_eq_zero, one_ne_zero, IsEmpty.forall_iff,
